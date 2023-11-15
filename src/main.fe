@@ -144,15 +144,18 @@ contract Main {
                 if value < 10{
                     revert
                 }
-                let to_balance:u256 = self.balance_of(owner:to)
-                self.balances[to] = to_balance + value
-                self.total_supply = self.total_supply + value
-                ctx.emit(Transfer(from:address(0), to, value))
+               self._mint(ctx,to:sender, value)
                 return true
             }
 
             /// private functions go here 
-
+        fn _mint (mut self,mut ctx: Context, to: address, value: u256)-> bool{
+             let to_balance:u256 = self.balance_of(owner:to)
+                self.balances[to] = to_balance + value
+                self.total_supply = self.total_supply + value
+                ctx.emit(Transfer(from:address(0), to, value))
+                return true
+        }
 
 }
 
